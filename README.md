@@ -20,7 +20,7 @@ $response.damaged
 $response.answers.damaged.probability
 ```
 
-`Invoke-OpenAIDecision` returns the API metadata, a named `answers` map, and convenient top-level answer values. Use `-Raw` to get the unmodified API response, whose answers remain in question order. The command accepts text or supported user messages with inline image data URLs.
+`Invoke-OpenAIDecision` returns the API metadata, a named `answers` map, and convenient top-level answer values. Use `-Raw` to get the unmodified API response, whose answers remain in question order. The command accepts text, PowerShell records (sent as JSON text), or supported user messages with inline image data URLs.
 
 ## Question types
 

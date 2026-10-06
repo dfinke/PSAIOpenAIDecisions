@@ -3,7 +3,8 @@
     Evaluates one or more ordered questions against shared input.
 .DESCRIPTION
     Sends a request to POST /v1/decisions. Input can be text or user messages
-    containing text and inline data-URL images. By default, named answers are
+    containing text and inline data-URL images. Non-string, non-array PowerShell
+    objects are serialized as JSON text before sending. By default, named answers are
     also exposed through an answers map and as top-level properties. Use -Raw
     to return the unmodified API response.
 #>
@@ -28,7 +29,15 @@ function Invoke-OpenAIDecision {
         else { $wireQuestions = @($Questions) }
         Assert-OpenAIDecisionQuestions -Questions $wireQuestions
 
-        $payload = [ordered]@{ model=$Model; input=$InputObject; questions=$wireQuestions }
+        # The API accepts input text or an array of message objects. Demos and
+        # callers may provide a record as shared evidence, so send that record
+        # as JSON text rather than as an unsupported top-level JSON object.
+        $wireInput = $InputObject
+        if ($InputObject -isnot [string] -and $InputObject -isnot [array]) {
+            $wireInput = ConvertTo-Json -InputObject $InputObject -Depth 100 -Compress
+        }
+
+        $payload = [ordered]@{ model=$Model; input=$wireInput; questions=$wireQuestions }
         if (-not [string]::IsNullOrWhiteSpace($SafetyIdentifier)) { $payload.safety_identifier=$SafetyIdentifier }
         $requestBody = ConvertTo-Json -InputObject $payload -Depth 100 -Compress
         $headers = @{ Authorization = "Bearer $env:OPENAI_API_KEY" }

@@ -18,7 +18,12 @@ function Get-LoanDecision {
             -CreditScore $State.CreditScore -Debt $State.Debt
         $response = Invoke-OpenAIDecision -InputObject $application -Question $loanModel.Question `
             -Model $loanModel.Model -ErrorAction Stop
-        $selected = [string] $response.answers.outcome.choice
+        $answer = $response.answers.outcome
+        if ([string]$answer.type -eq 'refusal') {
+            throw 'OpenAI Decisions refused this loan outcome evaluation. No loan outcome was selected.'
+        }
+
+        $selected = [string] $answer.choice
         if (-not $loanModel.Outcomes.Contains($selected)) {
             throw "OpenAI Decisions returned an unknown loan outcome: '$selected'."
         }
