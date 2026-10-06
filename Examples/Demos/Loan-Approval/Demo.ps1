@@ -1,5 +1,6 @@
 # PowerShell calculates percentages; OpenAI Decisions applies the editable policy to those facts.
 $ErrorActionPreference = 'Stop'
+Import-Module (Join-Path $PSScriptRoot '..\..\..\PSAIOpenAIDecisions.psd1') -ErrorAction Stop
 . "$PSScriptRoot/New-LoanApplication.ps1"
 . "$PSScriptRoot/Get-LoanDecision.ps1"
 
