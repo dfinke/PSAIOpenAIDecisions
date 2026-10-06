@@ -10,9 +10,23 @@ jobs:
       - name: Import module manifest
         shell: pwsh
         run: Test-ModuleManifest ./PSAIOpenAIDecisions.psd1
-      - name: Install Pester
+      - name: Select Pester 5
         shell: pwsh
-        run: Install-Module -Name Pester -RequiredVersion 5.4.0 -Repository PSGallery -Scope CurrentUser -Force
+        run: |
+          $pester = Get-Module -Name Pester -ListAvailable |
+            Where-Object { $_.Version.Major -eq 5 -and $_.Version -ge [version]'5.4.0' } |
+            Sort-Object Version -Descending |
+            Select-Object -First 1
+          if (-not $pester) {
+            Install-Module -Name Pester -MinimumVersion 5.4.0 -MaximumVersion 5.999.999 `
+              -Repository PSGallery -Scope CurrentUser -Force -SkipPublisherCheck
+            $pester = Get-Module -Name Pester -ListAvailable |
+              Where-Object { $_.Version.Major -eq 5 -and $_.Version -ge [version]'5.4.0' } |
+              Sort-Object Version -Descending |
+              Select-Object -First 1
+          }
+          if (-not $pester) { throw 'Pester 5.4.0 or newer is not available.' }
+          Import-Module Pester -RequiredVersion $pester.Version -Force
       - name: Run module tests
         shell: pwsh
         run: |
