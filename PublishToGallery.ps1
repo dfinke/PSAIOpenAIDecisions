@@ -1,6 +1,6 @@
 [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
 param(
-    [string]$env:NuGetApiKey,
+    [string]$NuGetApiKey = $env:NuGetApiKey,
     [string]$Repository = 'PSGallery'
 )
 
