@@ -2,5 +2,6 @@
 
 ## 0.1.0
 
-- Initial PowerShell module for the OpenAI Decisions API.
-- Add `Invoke-OpenAIDecision`, `New-OpenAIDecisionQuestion`, and `New-OpenAIYesNoQuestion`.
+- Add `Invoke-OpenAIDecision` and typed builders for predicate, choice, and score questions.
+- Add pipeline helpers to test predicates, select and rank input, choose labels, and find the best matching candidate.
+- Add runnable decision demos adapted from the Jev PowerShell demo collection.

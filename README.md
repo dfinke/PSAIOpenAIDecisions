@@ -1,65 +1,66 @@
 # PSAIOpenAIDecisions
 
-A PowerShell module for the OpenAI Decisions API. It submits text or supported user messages and returns structured answers to ordered predicate, choice, and score questions.
+A PowerShell module for OpenAI's Decisions API. Build predicate, choice, and score questions, invoke the API, and use pipeline commands to filter, rank, choose, or find original PowerShell inputs.
+
+Set `OPENAI_API_KEY` before making live requests. The module uses `POST https://api.openai.com/v1/decisions` and defaults to `gpt-6-luna`.
 
 ## Quick start
-
-Set `OPENAI_API_KEY`, then import the module and send a decision:
 
 ```powershell
 Import-Module PSAIOpenAIDecisions
 
+$question = New-OpenAIYesNoQuestion -Name damaged `
+    -Question 'Does the customer report a damaged item?'
+
+$response = Invoke-OpenAIDecision `
+    -Input 'The package arrived with a broken screen.' `
+    -Question $question
+
+$response.damaged
+$response.answers.damaged.probability
+```
+
+`Invoke-OpenAIDecision` returns the API metadata, a named `answers` map, and convenient top-level answer values. Use `-Raw` to get the unmodified API response, whose answers remain in question order. The command accepts text or supported user messages with inline image data URLs.
+
+## Question types
+
+```powershell
 $questions = @(
-    New-OpenAIYesNoQuestion -Name damaged -Instructions 'Does the customer report a damaged item?'
+    New-OpenAIYesNoQuestion -Name damaged -Question 'Does the customer report a damaged item?'
     New-OpenAIDecisionQuestion -Type Choice -Name route `
         -Instructions 'Which team should handle this request?' `
         -Choices @(
-            @{ value = 'billing'; description = 'Charges, invoices, refunds, or payment processing' }
-            @{ value = 'technical'; description = 'Product bugs, outages, or integration failures' }
-            @{ value = 'account'; description = 'Login, permissions, or profile access' }
+            @{ value = 'billing'; description = 'Charges, invoices, refunds, or payments' }
+            @{ value = 'technical'; description = 'Product bugs or integration failures' }
+            @{ value = 'account'; description = 'Login or account access' }
         )
     New-OpenAIDecisionQuestion -Type Score -Name urgency `
         -Instructions 'How urgent is this request?' `
         -Levels @('Can wait', 'Needs attention soon', 'Urgent')
 )
-
-$response = Invoke-OpenAIDecision -Input 'The package arrived with a broken screen.' -Question $questions
-$response.answers | Format-List
+Invoke-OpenAIDecision -Input 'I was charged twice and cannot sign in.' -Question $questions
 ```
 
-`Invoke-OpenAIDecision` makes one request to `POST https://api.openai.com/v1/decisions` and returns the API response as received. `-Question` accepts helper objects. `-Questions` accepts question objects already in the documented API shape. The model defaults to `gpt-6-luna`; use `-Model` to select another model available to your account. `-TimeoutSec` defaults to 30 seconds. An optional `-SafetyIdentifier` is sent as `safety_identifier`.
+`Choice` values may be strings or Booleans. Provide descriptions when they help distinguish options. `Score` levels are ordered from lowest to highest. For migration convenience, `-Type Noul` and `-Criteria` choice maps or score arrays are also accepted; questions are translated to OpenAI's predicate, choices, and levels schema.
 
-## Questions
+## Pipeline commands
 
-- `Predicate`: asks whether a statement is true; the answer includes its probability.
-- `Choice`: pass `-Choices` as strings or as objects with `value` and optional `description`. Values may be strings or Booleans.
-- `Score`: pass `-Levels` as ordered labels or objects with `label` and optional `description`.
+- `Test-OpenAIDecision` returns whether a predicate probability meets a threshold.
+- `Select-OpenAIDecision` keeps the original inputs that meet a threshold.
+- `Get-OpenAIDecisionRanking` returns original inputs ordered by predicate probability.
+- `Get-OpenAIDecisionChoice` chooses one supplied string label per input.
+- `Find-OpenAIDecision` compares candidates together and returns the selected original input, or no output if `none` is selected.
 
-The question order is preserved in the request and the answer array. The API may return a `refusal` answer for a question. Read the OpenAI API reference for the current schema and limits.
+Each pipeline item makes a live API request, except `Find-OpenAIDecision`, which compares its finite input set in one choice request. Thresholds are caller policy; inspect the probabilities and route uncertain answers for review when appropriate.
 
-## Input
+## Examples
 
-Input may be a string or an array of user messages. Message content may contain text and inline images as data URLs. External image URLs, file IDs, audio, and non-user messages are not supported by this endpoint. See the [Decisions API reference](https://developers.openai.com/api/reference/resources/decisions/methods/create).
+- [Simple decision](Examples/SimpleDecision.ps1)
+- [Jev demo ports](Examples/Demos/README.md), including refund triage, routing, semantic filtering, candidate finding, ranking, score-based queues, and policy workflows.
 
-```powershell
-$input = @(
-    @{
-        role = 'user'
-        content = @(
-            @{ type = 'input_text'; text = 'Does this item appear damaged?' }
-            @{ type = 'input_image'; image_url = 'data:image/jpeg;base64,...' }
-        )
-    }
-)
-Invoke-OpenAIDecision -Input $input -Question $questions[0]
-```
-
-## Install from this checkout
-
-```powershell
-./InstallModule.ps1
-```
+Install the current checkout with `./InstallModule.ps1`. For request and answer schemas, see the [OpenAI Decisions API reference](https://developers.openai.com/api/reference/resources/decisions/methods/create).
 
 ## License
 
 MIT. See [LICENSE](LICENSE).
+

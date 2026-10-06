@@ -8,12 +8,31 @@
 function New-OpenAIDecisionQuestion {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory)][ValidateSet('Predicate','Choice','Score')][string]$Type,
+        [Parameter(Mandatory)][ValidateSet('Predicate','Noul','Choice','Score')][string]$Type,
         [Parameter(Mandatory)][Alias('Question')][ValidateNotNullOrEmpty()][string]$Instructions,
         [Parameter()][AllowNull()][string]$Name,
         [Parameter()][AllowNull()][object[]]$Choices,
-        [Parameter()][AllowNull()][object[]]$Levels
+        [Parameter()][AllowNull()][object[]]$Levels,
+        [Parameter()][AllowNull()][object]$Criteria
     )
+
+    if ($Type -eq 'Noul') { $Type = 'Predicate' }
+    if ($null -ne $Criteria) {
+        if ($Type -eq 'Choice' -and $null -eq $Choices) {
+            if ($Criteria -is [System.Collections.IDictionary]) {
+                $Choices = @($Criteria.GetEnumerator() | ForEach-Object {
+                    if ($null -eq $_.Value) { [pscustomobject]@{ value = [string]$_.Key } }
+                    else { [pscustomobject]@{ value = [string]$_.Key; description = [string]$_.Value } }
+                })
+            } else { $Choices = @($Criteria) }
+        }
+        elseif ($Type -eq 'Score' -and $null -eq $Levels) { $Levels = @($Criteria) }
+        elseif ($Type -eq 'Predicate' -and $Criteria -is [System.Collections.IDictionary]) {
+            $trueText = if ($Criteria.Contains('true')) { [string]$Criteria['true'] } else { '' }
+            $falseText = if ($Criteria.Contains('false')) { [string]$Criteria['false'] } else { '' }
+            if ($trueText -or $falseText) { $Instructions += "`n`nTrue: $trueText`nFalse: $falseText" }
+        }
+    }
 
     if ($Type -eq 'Choice' -and $Choices.Count -eq 0) { throw 'Choice questions require -Choices.' }
     if ($Type -ne 'Choice' -and $null -ne $Choices) { throw "$Type questions do not accept -Choices." }

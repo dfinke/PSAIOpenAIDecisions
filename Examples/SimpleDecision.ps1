@@ -9,4 +9,5 @@ $response = Invoke-OpenAIDecision `
     -Input 'I was charged twice for my order. Please refund the duplicate payment.' `
     -Question $question
 
-$response.answers | Format-List
+$response.answers.mentionsRefund.probability
+

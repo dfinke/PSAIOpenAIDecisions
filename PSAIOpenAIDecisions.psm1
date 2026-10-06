@@ -6,4 +6,13 @@ $privatePath = Join-Path $PSScriptRoot 'Private'
 $publicPath = Join-Path $PSScriptRoot 'Public'
 foreach ($script in Get-ChildItem -LiteralPath $privatePath -Filter '*.ps1' -File | Sort-Object Name) { . $script.FullName }
 foreach ($script in Get-ChildItem -LiteralPath $publicPath -Filter '*.ps1' -File | Sort-Object Name) { . $script.FullName }
-Export-ModuleMember -Function @('Invoke-OpenAIDecision', 'New-OpenAIDecisionQuestion', 'New-OpenAIYesNoQuestion')
+Export-ModuleMember -Function @(
+    'Invoke-OpenAIDecision'
+    'New-OpenAIDecisionQuestion'
+    'New-OpenAIYesNoQuestion'
+    'Find-OpenAIDecision'
+    'Get-OpenAIDecisionChoice'
+    'Get-OpenAIDecisionRanking'
+    'Select-OpenAIDecision'
+    'Test-OpenAIDecision'
+)
