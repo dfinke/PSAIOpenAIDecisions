@@ -43,6 +43,7 @@ $stopWords = @('the', 'and', 'for', 'with', 'from', 'that', 'this', 'into', 'usi
 $terms = @(
     [regex]::Matches($Task.ToLowerInvariant(), '[a-z0-9]{3,}') |
         ForEach-Object Value |
+        Where-Object { $_ -notmatch '^\d+$' } |
         Where-Object { $_ -notin $stopWords } |
         Sort-Object -Unique
 )
@@ -51,16 +52,30 @@ if ($terms.Count -eq 0) {
     throw 'Describe what you want to do with a few specific words.'
 }
 
-$candidates = foreach ($command in Get-Command -CommandType Cmdlet, Function -ErrorAction SilentlyContinue) {
-    $help = Get-Help -Name $command.Name -ErrorAction SilentlyContinue
+$readOnlyVerbs = @('Compare', 'Find', 'Get', 'Group', 'Measure', 'Search', 'Select', 'Sort', 'Where')
+$candidates = foreach ($command in Get-Command -CommandType Cmdlet -ListImported -ErrorAction SilentlyContinue |
+    Where-Object { $_.Verb -in $readOnlyVerbs }) {
+    # Filter on local command metadata first. Looking up help for every installed
+    # command is slow and can make Get-Help probe unavailable filesystem drives.
+    $metadata = "$($command.Name) $($command.Definition)".ToLowerInvariant()
+    $metadataMatches = @($terms | Where-Object {
+            $term = $_
+            $metadata -match "(?<![a-z0-9])$([regex]::Escape($term.TrimEnd('s')))[a-z0-9]*"
+        })
+    if ($metadataMatches.Count -eq 0) { continue }
+
+    $help = Get-Help -Name $command.Name -ErrorAction Ignore
     $synopsis = [string] $help.Synopsis
     if ([string]::IsNullOrWhiteSpace($synopsis)) {
         $synopsis = [string] $command.Definition
         if ($synopsis.Length -gt 240) { $synopsis = $synopsis.Substring(0, 240) }
     }
 
-    $searchText = "$($command.Name) $synopsis".ToLowerInvariant()
-    $matchCount = @($terms | Where-Object { $searchText.Contains($_) }).Count
+    $searchText = "$($command.Name) $synopsis $($command.Definition)".ToLowerInvariant()
+    $matchCount = @($terms | Where-Object {
+            $term = $_
+            $searchText -match "(?<![a-z0-9])$([regex]::Escape($term.TrimEnd('s')))[a-z0-9]*"
+        }).Count
     if ($matchCount -gt 0) {
         [pscustomobject]@{
             Name        = $command.Name
