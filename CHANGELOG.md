@@ -2,9 +2,10 @@
 
 ## 0.1.0
 
-- Add annotation, multi-tag, and score pipeline helpers for the Decisions API.
-- Port the remaining standalone and pipeline examples, with their sample data.
+Initial preview of the PowerShell client for the OpenAI Decisions API.
 
-- Add `Invoke-OpenAIDecision` and typed builders for predicate, choice, and score questions.
-- Add pipeline helpers to test predicates, select and rank input, choose labels, and find the best matching candidate.
-- Add runnable decision demos adapted from the Jev PowerShell demo collection.
+- Add `Invoke-OpenAIDecision` and builders for predicate, choice, and score questions.
+- Support named answers, raw API responses, text input, message arrays, and PowerShell records serialized as JSON text.
+- Add pipeline commands for predicate checks, filtering, ranking, label selection, candidate comparison, annotations, multi-tag classification, and ordered scores.
+- Port standalone and pipeline workflows, focused demos, and sample data from the Jev PowerShell examples.
+- Include Excel-based demonstrations for deal review and IT request prioritization.

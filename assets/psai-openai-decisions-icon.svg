@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">PSAIOpenAIDecisions</title>
+  <desc id="desc">PowerShell inputs flow into a decision hub and branch to predicate, choice, and score results.</desc>
+  <defs>
+    <linearGradient id="flow" x1="118" y1="190" x2="506" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#39C7F4"/>
+      <stop offset="1" stop-color="#1479E8"/>
+    </linearGradient>
+    <linearGradient id="hub" x1="315" y1="130" x2="435" y2="250" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#31C4F3"/>
+      <stop offset="1" stop-color="#1765D1"/>
+    </linearGradient>
+    <filter id="softShadow" x="285" y="104" width="180" height="180" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- Input fragments -->
+  <g stroke="#30BCEB" stroke-width="5" stroke-linecap="round" opacity=".92">
+    <path d="M72 119h60l26 25v52H72z" fill="#DDF8FF"/>
+    <path d="M158 137v-18h-20"/>
+    <path d="M76 166h54M76 183h34"/>
+    <path d="M63 245h68l22 22v56H63z" fill="#E9F6FF"/>
+    <path d="M153 267v-22h-22"/>
+    <path d="M68 286h50M68 303h33"/>
+    <circle cx="193" cy="198" r="12" fill="#34C4F3" stroke="none"/>
+    <circle cx="215" cy="219" r="7" fill="#1676E5" stroke="none"/>
+  </g>
+
+  <!-- Streams into the decision hub -->
+  <g stroke="url(#flow)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M158 161h76c38 0 46 23 76 34"/>
+    <path d="M155 273h82c34 0 44-25 73-39"/>
+    <path d="M192 207h106"/>
+    <path d="m285 195 17 12-17 12" fill="#1879E7" stroke="none"/>
+  </g>
+
+  <!-- Decision hub -->
+  <circle cx="373" cy="207" r="72" fill="#1682E7" opacity=".22" filter="url(#softShadow)"/>
+  <circle cx="373" cy="207" r="62" fill="url(#hub)" stroke="#74DDF8" stroke-width="6"/>
+  <circle cx="373" cy="207" r="34" fill="#D5FAFF" opacity=".96"/>
+  <path d="M360 207h26M373 194v26" stroke="#1682E7" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Three typed decision outputs -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M435 177h52c36 0 32-87 75-87h35" stroke="#1788E9" stroke-width="11"/>
+    <path d="m584 77 16 13-16 13" stroke="#1788E9" stroke-width="8"/>
+    <path d="M437 207h160" stroke="#1788E9" stroke-width="11"/>
+    <path d="m584 194 16 13-16 13" stroke="#1788E9" stroke-width="8"/>
+    <path d="M435 237h52c36 0 32 87 75 87h35" stroke="#1788E9" stroke-width="11"/>
+    <path d="m584 311 16 13-16 13" stroke="#1788E9" stroke-width="8"/>
+  </g>
+
+  <!-- Predicate -->
+  <circle cx="686" cy="90" r="48" fill="#123E71" stroke="#37D6BD" stroke-width="6"/>
+  <path d="m661 90 16 16 34-37" stroke="#A5FFEA" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Choice -->
+  <circle cx="686" cy="207" r="48" fill="#29265E" stroke="#9E83FF" stroke-width="6"/>
+  <g fill="#C5B6FF">
+    <circle cx="668" cy="190" r="5"/><circle cx="668" cy="207" r="5"/><circle cx="668" cy="224" r="5"/>
+  </g>
+  <g stroke="#EEE9FF" stroke-width="6">
+    <path d="M682 190h27M682 207h27M682 224h27"/>
+  </g>
+
+  <!-- Score -->
+  <circle cx="686" cy="324" r="48" fill="#583507" stroke="#FFC247" stroke-width="6"/>
+  <g fill="#FFD981">
+    <rect x="661" y="314" width="11" height="20" rx="4"/>
+    <rect x="680" y="301" width="11" height="33" rx="4"/>
+    <rect x="699" y="284" width="11" height="50" rx="4"/>
+  </g>
+</svg>
