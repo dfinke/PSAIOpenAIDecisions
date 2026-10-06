@@ -10,3 +10,16 @@ jobs:
       - name: Import module manifest
         shell: pwsh
         run: Test-ModuleManifest ./PSAIOpenAIDecisions.psd1
+      - name: Install Pester
+        shell: pwsh
+        run: Install-Module -Name Pester -RequiredVersion 5.4.0 -Repository PSGallery -Scope CurrentUser -Force
+      - name: Run module tests
+        shell: pwsh
+        run: |
+          $configuration = New-PesterConfiguration
+          $configuration.Run.Path = './Tests'
+          $configuration.Run.Exit = $true
+          $configuration.TestResult.Enabled = $true
+          $configuration.TestResult.OutputPath = Join-Path $env:RUNNER_TEMP 'PSAIOpenAIDecisions-testResults.xml'
+          $configuration.Output.CIFormat = 'GitHubActions'
+          Invoke-Pester -Configuration $configuration
