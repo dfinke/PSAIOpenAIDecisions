@@ -8,6 +8,9 @@ function Get-OpenAIDecisionAnswer {
     if ($answers -is [System.Collections.IDictionary]) {
         if ($answers.Contains($Name)) { return $answers[$Name] }
     }
+    elseif ($null -ne $answers.PSObject.Properties[$Name]) {
+        return $answers.PSObject.Properties[$Name].Value
+    }
     else {
         $matches = @($answers | Where-Object { [string]$_.name -eq $Name })
         if ($matches.Count -eq 1) { return $matches[0] }

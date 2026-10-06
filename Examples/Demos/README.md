@@ -1,6 +1,6 @@
 # OpenAI Decisions PowerShell demos
 
-These small examples adapt the Jev demos to the OpenAI Decisions API. They use `OPENAI_API_KEY`, make live requests, and include local sample input. Run scripts from any directory; paths are based on each script's location.
+These focused examples use the OpenAI Decisions API. They use `OPENAI_API_KEY`, make live requests, and include local sample input. Run scripts from any directory; paths are based on each script's location.
 
 | Demo | What it shows |
 |---|---|

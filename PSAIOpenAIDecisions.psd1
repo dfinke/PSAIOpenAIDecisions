@@ -6,7 +6,7 @@
     Copyright         = '(c) 2026 David Finke'
     Description       = 'A PowerShell client for the OpenAI Decisions API.'
     PowerShellVersion = '7.0'
-    FunctionsToExport = @('Invoke-OpenAIDecision', 'New-OpenAIDecisionQuestion', 'New-OpenAIYesNoQuestion', 'Find-OpenAIDecision', 'Get-OpenAIDecisionChoice', 'Get-OpenAIDecisionRanking', 'Select-OpenAIDecision', 'Test-OpenAIDecision')
+    FunctionsToExport = @('Invoke-OpenAIDecision', 'New-OpenAIDecisionQuestion', 'New-OpenAIYesNoQuestion', 'Add-OpenAIDecisionAnnotation', 'Add-OpenAIDecisionTag', 'Find-OpenAIDecision', 'Get-OpenAIDecisionChoice', 'Get-OpenAIDecisionRanking', 'Get-OpenAIDecisionScore', 'Select-OpenAIDecision', 'Test-OpenAIDecision')
     CmdletsToExport   = @()
     VariablesToExport = @()
     AliasesToExport   = @()
@@ -16,7 +16,7 @@
             ProjectUri    = 'https://github.com/dfinke/PSAIOpenAIDecisions'
             RepositoryUri = 'https://github.com/dfinke/PSAIOpenAIDecisions'
             LicenseUri    = 'https://github.com/dfinke/PSAIOpenAIDecisions/blob/main/LICENSE'
-            ReleaseNotes  = 'Adds PowerShell helpers for predicate, choice, and score questions; pipeline commands for testing, filtering, ranking, choosing, and finding inputs; and runnable demonstrations.'
+            ReleaseNotes  = 'Adds PowerShell helpers for predicate, choice, and score questions; pipeline commands for testing, filtering, ranking, choosing, finding, annotating, and tagging inputs; and runnable demonstrations.'
         }
     }
 }

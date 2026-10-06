@@ -4,7 +4,7 @@ param([string] $Path = "$PSScriptRoot/message.txt")
 $ErrorActionPreference = 'Stop'
 Import-Module "$PSScriptRoot/../../../PSAIOpenAIDecisions.psd1"
 
-$question = New-OpenAIDecisionQuestion -Name refund -Type Noul `
+$question = New-OpenAIDecisionQuestion -Name refund -Type Predicate `
     -Instructions 'Does the customer ask for money back?'
 
 $decision = Get-Content -LiteralPath $Path -Raw |

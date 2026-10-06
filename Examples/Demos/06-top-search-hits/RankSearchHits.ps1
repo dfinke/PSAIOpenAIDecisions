@@ -9,7 +9,7 @@ param(
 $ErrorActionPreference = 'Stop'
 Import-Module "$PSScriptRoot/../../../PSAIOpenAIDecisions.psd1"
 
-$question = New-OpenAIDecisionQuestion -Name relevant -Type Noul `
+$question = New-OpenAIDecisionQuestion -Name relevant -Type Predicate `
     -Instructions 'Does this passage answer the search query?' `
     -Criteria @{
         true  = 'The passage directly or materially helps answer the query.'

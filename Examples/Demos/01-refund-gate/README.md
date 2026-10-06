@@ -14,7 +14,7 @@ With PowerShell 7 and `OPENAI_API_KEY` configured, run from the repository root:
 
 `message.txt` asks for a refund. `question.txt` asks whether a jug is dishwasher safe.
 
-The script sends one complete message per run, asks a Noul question, and uses `>= 0.5` to choose `refunds` or `normal`. This matches the Rust demo's default cutoff. The output shown above is illustrative; each run makes a live OpenAI Decisions request. Request errors stop the script.
+The script sends one complete message per run, asks a predicate question, and uses `>= 0.5` to choose `refunds` or `normal`. This matches the Rust demo's default cutoff. The output shown above is illustrative; each run makes a live OpenAI Decisions request. Request errors stop the script.
 
 Ported from `thinkthen/demos/01-refund-gate`, using the existing `New-OpenAIDecisionQuestion` and `Invoke-OpenAIDecision` commands.
 

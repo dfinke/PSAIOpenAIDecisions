@@ -8,7 +8,7 @@ param(
 $ErrorActionPreference = 'Stop'
 Import-Module "$PSScriptRoot/../../../PSAIOpenAIDecisions.psd1"
 
-$question = New-OpenAIDecisionQuestion -Name reproducibleDefect -Type Noul `
+$question = New-OpenAIDecisionQuestion -Name reproducibleDefect -Type Predicate `
     -Instructions 'Does the report give steps that would reproduce a defect?' `
     -Criteria @{
         true  = 'The report describes a defect and gives concrete steps to reproduce it.'

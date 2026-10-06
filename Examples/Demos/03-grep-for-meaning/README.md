@@ -9,7 +9,7 @@ With PowerShell 7 and `OPENAI_API_KEY` configured, run from the repository root:
     Select-Object id, body
 ```
 
-The sample CSV has five synthetic reports. Two describe repeatable failures with concrete steps; the feature request, vague performance complaint, and how-to question do not. The script asks OpenAI Decisions one Noul question per row and keeps reports whose yes probability is at least `0.9`.
+The sample CSV has five synthetic reports. Two describe repeatable failures with concrete steps; the feature request, vague performance complaint, and how-to question do not. The script asks OpenAI Decisions one predicate question per row and keeps reports whose yes probability is at least `0.9`.
 
 The request includes only each row's `body`. The returned PowerShell object is the original row, so its `id`, `opened` date, and `reporter` remain available to later commands without sending those fields to OpenAI Decisions.
 

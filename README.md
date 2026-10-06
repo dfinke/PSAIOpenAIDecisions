@@ -50,13 +50,16 @@ Invoke-OpenAIDecision -Input 'I was charged twice and cannot sign in.' -Question
 - `Get-OpenAIDecisionRanking` returns original inputs ordered by predicate probability.
 - `Get-OpenAIDecisionChoice` chooses one supplied string label per input.
 - `Find-OpenAIDecision` compares candidates together and returns the selected original input, or no output if `none` is selected.
+- `Add-OpenAIDecisionAnnotation` adds named answers while retaining each input.
+- `Add-OpenAIDecisionTag` applies multiple independent predicate tags in one request per input.
+- `Get-OpenAIDecisionScore` returns a numeric score on caller-supplied ordered levels.
 
 Each pipeline item makes a live API request, except `Find-OpenAIDecision`, which compares its finite input set in one choice request. Thresholds are caller policy; inspect the probabilities and route uncertain answers for review when appropriate.
 
 ## Examples
 
 - [Simple decision](Examples/SimpleDecision.ps1)
-- [Jev demo ports](Examples/Demos/README.md), including refund triage, routing, semantic filtering, candidate finding, ranking, score-based queues, and policy workflows.
+- [Complete example index](Examples/README.md), including standalone example ports, pipeline workflows, and focused demos.
 
 Install the current checkout with `./InstallModule.ps1`. For request and answer schemas, see the [OpenAI Decisions API reference](https://developers.openai.com/api/reference/resources/decisions/methods/create).
 

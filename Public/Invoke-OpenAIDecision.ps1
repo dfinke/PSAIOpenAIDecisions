@@ -11,7 +11,7 @@
 function Invoke-OpenAIDecision {
     [CmdletBinding(DefaultParameterSetName='QuestionObjects')]
     param(
-        [Parameter(Mandatory,Position=0,ValueFromPipeline)][Alias('Input')][ValidateNotNull()][object]$InputObject,
+        [Parameter(Mandatory,Position=0,ValueFromPipeline)][Alias('Input','State')][ValidateNotNull()][object]$InputObject,
         [Parameter(Mandatory,ParameterSetName='QuestionObjects')][ValidateNotNullOrEmpty()][object[]]$Question,
         [Parameter(Mandatory,ParameterSetName='WireQuestions')][ValidateNotNullOrEmpty()][object[]]$Questions,
         [Parameter()][ValidateNotNullOrEmpty()][string]$Model='gpt-6-luna',

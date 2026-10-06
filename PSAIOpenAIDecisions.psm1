@@ -10,9 +10,12 @@ Export-ModuleMember -Function @(
     'Invoke-OpenAIDecision'
     'New-OpenAIDecisionQuestion'
     'New-OpenAIYesNoQuestion'
+    'Add-OpenAIDecisionAnnotation'
+    'Add-OpenAIDecisionTag'
     'Find-OpenAIDecision'
     'Get-OpenAIDecisionChoice'
     'Get-OpenAIDecisionRanking'
+    'Get-OpenAIDecisionScore'
     'Select-OpenAIDecision'
     'Test-OpenAIDecision'
 )

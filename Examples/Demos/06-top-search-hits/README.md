@@ -9,7 +9,7 @@ With PowerShell 7 and `OPENAI_API_KEY` configured, run from the repository root:
     Format-Table Path, Relevance
 ```
 
-The six sample pages are about sign-in failures. The script sends OpenAI Decisions only the query and each page's passage; it keeps the path locally so the ranked results can point back to their source. It evaluates every candidate, sorts by the Noul yes probability, and returns the top three by default.
+The six sample pages are about sign-in failures. The script sends OpenAI Decisions only the query and each page's passage; it keeps the path locally so the ranked results can point back to their source. It evaluates every candidate, sorts by the predicate yes probability, and returns the top three by default.
 
 The recorded Rust run ranked `runbooks/database.md`, `notes/2025-11-outage.md`, and `runbooks/login.md` first. The live PowerShell run can produce a different order. Ranking changes reading order; it does not prove a page is relevant. With no minimum score, the script still returns three results even when all scores are low.
 
