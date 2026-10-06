@@ -45,8 +45,8 @@ $results = foreach ($commit in $commits) {
     [pscustomobject]@{
         Category   = $decision.category
         Confidence = [math]::Round([double]$answer.confidence, 2)
-        Commit     = $decision.Commit
-        Subject    = $decision.Subject
+        Commit     = $decision.State.Commit
+        Subject    = $decision.State.Subject
     }
 }
 

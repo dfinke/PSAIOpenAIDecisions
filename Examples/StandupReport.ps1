@@ -57,8 +57,8 @@ $updates = foreach ($commit in $commits) {
     [pscustomobject]@{
         Type       = $decision.updateType
         Confidence = [math]::Round([double]$answer.confidence, 2)
-        Commit     = $decision.Commit
-        Subject    = $decision.Subject
+        Commit     = $decision.State.Commit
+        Subject    = $decision.State.Subject
     }
 }
 
