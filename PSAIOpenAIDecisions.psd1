@@ -2,8 +2,8 @@
     RootModule        = 'PSAIOpenAIDecisions.psm1'
     ModuleVersion     = '0.1.0'
     GUID              = '7f2a32b9-14c5-4f4c-91e8-7c355693a2da'
-    Author            = 'David Finke'
-    Copyright         = '(c) 2026 David Finke'
+    Author            = 'Doug Finke'
+    Copyright         = '(c) 2026 Doug Finke'
     Description       = 'A PowerShell client for the OpenAI Decisions API.'
     PowerShellVersion = '7.0'
     FunctionsToExport = @('Invoke-OpenAIDecision', 'New-OpenAIDecisionQuestion', 'New-OpenAIYesNoQuestion', 'Add-OpenAIDecisionAnnotation', 'Add-OpenAIDecisionTag', 'Find-OpenAIDecision', 'Get-OpenAIDecisionChoice', 'Get-OpenAIDecisionRanking', 'Get-OpenAIDecisionScore', 'Select-OpenAIDecision', 'Test-OpenAIDecision')
